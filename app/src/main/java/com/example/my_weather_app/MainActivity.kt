@@ -6,6 +6,7 @@ import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.my_weather_app.databinding.ActivityMainBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,12 +16,15 @@ import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     val CITY: String = "hyderabad,in"
     val API: String = "d5f97e334832187c50dc03354326d91d"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         getWeatherData()
     }
 
@@ -49,27 +53,24 @@ class MainActivity : AppCompatActivity() {
 
     }
     private fun updateUI(it: WeatherResponse) {
+        binding.address.text = "${it.name}, ${it.sys.country}"
+        binding.updatedAt.text = "Updated At: ${SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format(Date(it.dt * 1000))}"
+        binding.status.text = it.weather[0].description.capitalize()
+        binding.temperature.text = "${it.main.temp}°C"
+        binding.minTemp.text = "Min Temp: ${it.main.temp_min}°C"
+        binding.maxTemp.text = "Max Temp: ${it.main.temp_max}°C"
+        binding.sunrise.text = SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date(it.sys.sunrise * 1000))
+        binding.sunset.text = SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date(it.sys.sunset * 1000))
+        binding.wind.text = "${it.wind.speed}"
+        binding.pressure.text = "${it.main.pressure}"
+        binding.humidity.text = "${it.main.humidity}"
 
-        findViewById<TextView>(R.id.address).text = "${it.name}, ${it.sys.country}"
-        findViewById<TextView>(R.id.updated_at).text = "Updated At: ${SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format(Date(it.dt * 1000))}"
-        findViewById<TextView>(R.id.status).text = it.weather[0].description.capitalize()
-        findViewById<TextView>(R.id.temperature).text = "${it.main.temp}°C"
-        findViewById<TextView>(R.id.min_temp).text = "Min Temp: ${it.main.temp_min}°C"
-        findViewById<TextView>(R.id.max_temp).text = "Max Temp: ${it.main.temp_max}°C"
-        findViewById<TextView>(R.id.sunrise).text = SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date(it.sys.sunrise * 1000))
-        findViewById<TextView>(R.id.sunset).text = SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(Date(it.sys.sunset * 1000))
-        findViewById<TextView>(R.id.wind).text = "${it.wind.speed}"
-        findViewById<TextView>(R.id.pressure).text = "${it.main.pressure}"
-        findViewById<TextView>(R.id.humidity).text = "${it.main.humidity}"
-
-        findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
-        findViewById<RelativeLayout>(R.id.mainPart).visibility = View.VISIBLE
+        binding.loader.visibility = View.GONE
+        binding.mainPart.visibility = View.VISIBLE
     }
 
     private fun showError() {
-        findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
-        findViewById<TextView>(R.id.error).visibility = View.VISIBLE
+        binding.loader.visibility = View.GONE
+        binding.error.visibility = View.VISIBLE
     }
-
-
 }
