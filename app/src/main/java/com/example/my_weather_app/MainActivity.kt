@@ -5,7 +5,9 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.my_weather_app.databinding.ActivityMainBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,43 +19,30 @@ import java.util.Locale
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
-    val CITY: String = "hyderabad,in"
-    val API: String = "d5f97e334832187c50dc03354326d91d"
+    private val viewModel: WeatherViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        getWeatherData()
-    }
 
-    private fun getWeatherData() {
-        val call: Call<WeatherResponse> =
-            RetrofitClient.myApi.getCurrentWeather(CITY, "metric", API)
-        call.enqueue(object : Callback<WeatherResponse> {
-            override fun onResponse(
-                call: Call<WeatherResponse>,
-                response: Response<WeatherResponse>
-            ) {
-                if (response.isSuccessful) {
-                    val weatherResponse = response.body()
-                    weatherResponse?.let {
-                        updateUI(it)
-                    }
-                } else {
-                    showError()
-                }
-            }
+        binding.enter.setOnClickListener{
+            val cityName = binding.cityName.text.toString()
+            viewModel.getWeatherData(cityName)
+        }
 
-            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
-                showError()
-            }
+        viewModel.weatherData.observe(this, Observer { weatherResponse ->
+            weatherResponse?.let { updateUI(it) }
         })
 
+        viewModel.error.observe(this, Observer {
+            showError()
+        })
     }
+
     private fun updateUI(it: WeatherResponse) {
-        binding.address.text = "${it.name}, ${it.sys.country}"
+        binding.cityName.text = it.cityname
+        binding.countryName.text = it.sys.country
         binding.updatedAt.text = "Updated At: ${SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format(Date(it.dt * 1000))}"
         binding.status.text = it.weather[0].description.capitalize()
         binding.temperature.text = "${it.main.temp}°C"

@@ -22,22 +22,31 @@
             android:orientation="vertical"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/address"
-                android:textSize="24sp"
-                android:text="Location"
+            <EditText
+                android:id="@+id/city_name"
+                android:textSize="18sp"
+                android:hint="Please enter the city name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 
-            </TextView>
-            <TextView
-                android:id="@+id/updated_at"
-                android:textSize="14sp"
-                android:text="Updated At"
+            </EditText>
+            <EditText
+                android:id="@+id/country_name"
+                android:textSize="18sp"
+                android:hint="Please enter the coutry name(shortforn)"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                
-            </TextView>
+
+            </EditText>
+
+            <Button
+                android:id="@+id/enter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter">
+
+            </Button>
+
 
         </LinearLayout>
         
@@ -47,6 +56,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
+
+            <TextView
+                android:id="@+id/updated_at"
+                android:textSize="14sp"
+                android:text="Updated At"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
 
             <TextView
                 android:id="@+id/status"
