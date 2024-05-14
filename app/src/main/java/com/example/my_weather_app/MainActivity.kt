@@ -21,15 +21,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: WeatherViewModel by viewModels()
 
+    private val CITY: String = "hyderabad,in";
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.enter.setOnClickListener{
-            val cityName = binding.cityName.text.toString()
-            viewModel.getWeatherData(cityName)
-        }
+        viewModel.getWeatherData(CITY)
 
         viewModel.weatherData.observe(this, Observer { weatherResponse ->
             weatherResponse?.let { updateUI(it) }
@@ -41,8 +40,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUI(it: WeatherResponse) {
-        binding.cityName.text = it.cityname
-        binding.countryName.text = it.sys.country
+        binding.location.text = "${it.cityName},${it.sys.country}"
         binding.updatedAt.text = "Updated At: ${SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format(Date(it.dt * 1000))}"
         binding.status.text = it.weather[0].description.capitalize()
         binding.temperature.text = "${it.main.temp}°C"

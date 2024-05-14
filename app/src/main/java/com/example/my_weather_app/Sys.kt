@@ -5,5 +5,5 @@ import android.text.Editable
 data class Sys(
     val sunrise: Long,
     val sunset: Long,
-    val country: Editable
+    val country: String
 )

@@ -15,7 +15,7 @@ class WeatherViewModel : ViewModel() {
     private val error_messsage = MutableLiveData<Unit>()
     val error: LiveData<Unit> get() = error_messsage
 
-    val API: String = "d5f97e334832187c50dc03354326d91d"
+    val API: String = "48b2b4992be7761f5215348cca70e28a"
 
      fun getWeatherData(city:String) {
         val call: Call<WeatherResponse> =  RetrofitClient.myApi.getCurrentWeather(city, "metric", API)

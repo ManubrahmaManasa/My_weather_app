@@ -16,38 +16,29 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/addressPart"
             android:layout_width="match_parent"
+            android:layout_height="100dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/city_name"
-                android:textSize="18sp"
-                android:hint="Please enter the city name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                
-            </EditText>
-            <EditText
-                android:id="@+id/country_name"
-                android:textSize="18sp"
-                android:hint="Please enter the coutry name(shortforn)"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </EditText>
-
-            <Button
-                android:id="@+id/enter"
+            >
+            <TextView
+                android:id="@+id/location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enter">
+                android:text="Location"
+                android:textSize="22sp"
+                android:layout_gravity="center">
 
-            </Button>
+            </TextView>
 
+            <TextView
+                android:id="@+id/updated_at"
+                android:textSize="14sp"
+                android:text="Updated At"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
+            </TextView>
         </LinearLayout>
         
         <LinearLayout
@@ -56,17 +47,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
-
-            <TextView
-                android:id="@+id/updated_at"
-                android:textSize="14sp"
-                android:text="Updated At"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </TextView>
 
             <TextView
                 android:id="@+id/status"
