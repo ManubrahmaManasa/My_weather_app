@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUI(it: WeatherResponse) {
-        binding.location.text = "${it.cityName},${it.sys.country}"
+        binding.location.text = "${it.name},${it.sys.country}"
         binding.updatedAt.text = "Updated At: ${SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format(Date(it.dt * 1000))}"
         binding.status.text = it.weather[0].description.capitalize()
         binding.temperature.text = "${it.main.temp}°C"

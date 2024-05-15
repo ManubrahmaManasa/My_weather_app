@@ -6,5 +6,5 @@ data class WeatherResponse(
     val wind: Wind,
     val weather: List<Weather>,
     val dt: Long,
-    val cityName: String,
+    val name: String,
 )
